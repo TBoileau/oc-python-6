@@ -1,0 +1,40 @@
+header {
+  padding: 1rem 0;
+  color: $dark;
+  background: rgba(0, 0, 0, 0.1);
+
+  > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      height: 4rem;
+    }
+
+    > nav {
+      flex-grow: 1;
+
+      > ul {
+        display: flex;
+        justify-content: flex-end;
+
+        > li {
+          margin: 0 2rem;
+
+          @include respond-to(sm) {
+            margin: 0 1rem;
+          }
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @each $size, $width in $containers {
+    @include respond-on($size) {
+      max-width: $width;
+      width: 100%;
+    }
+  }
+}
