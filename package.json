@@ -20,6 +20,8 @@
     "regenerator-runtime": "^0.13.2",
     "sass": "^1.34.1",
     "sass-loader": "^11.0.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0",
     "webpack-notifier": "^1.6.0"
   },
   "dependencies": {}
