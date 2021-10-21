@@ -1,5 +1,12 @@
+html,
 body {
   font-family: 'Poppins', sans-serif;
+
+  @each $size, $font-size in $font-sizes {
+    @include respond-on($size) {
+      font-size: $font-size;
+    }
+  }
 }
 
 a {
