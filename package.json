@@ -1,0 +1,9 @@
+{
+  "name": "oc-python-6",
+  "version": "1.0.0",
+  "description": "JustStreamIt Front-end",
+  "main": "index.js",
+  "repository": "git@github.com:TBoileau/oc-python-6.git",
+  "author": "TBoileau <t-boileau@email.com>",
+  "license": "MIT"
+}
