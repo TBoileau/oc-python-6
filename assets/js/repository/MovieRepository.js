@@ -14,8 +14,20 @@ export default class MovieRepository extends Repository {
    */
   async getMoviesByCategory(page, category) {
     page = page || 1;
+    category = category || null;
 
-    return await await this.get(`/?genre=${category.name}&page=${page}`)
+    const queryParams = {
+      page,
+      sort_by: '-imdb_score',
+    };
+
+    if (category.id !== null) {
+      queryParams.genre = category.name;
+    }
+
+    const searchParams = new URLSearchParams(queryParams);
+
+    return await await this.get(`/?${searchParams.toString()}`)
         .then((response) => new Paginator(
             response.results.map((movie) => new Movie(
                 movie.id,
