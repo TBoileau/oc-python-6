@@ -9,8 +9,9 @@ export default class CategoryComponent {
    * @param {Category} category
    * @param {MovieRepository} movieRepository
    * @param {EventDispatcher} eventDispatcher
+   * @param {ModalComponent} modalComponent
    */
-  constructor(category, movieRepository, eventDispatcher) {
+  constructor(category, movieRepository, eventDispatcher, modalComponent) {
     this.page = 1;
     this.left = this.left.bind(this);
     this.right = this.right.bind(this);
@@ -19,6 +20,7 @@ export default class CategoryComponent {
     this.createElement = this.createElement.bind(this);
     this.category = category;
     this.eventDispatcher = eventDispatcher;
+    this.modalComponent = modalComponent;
     this.movieRepository = movieRepository;
     this.createElement();
     this.movieRepository.getMoviesByCategory(this.page, this.category).then(this.render);
@@ -72,7 +74,7 @@ export default class CategoryComponent {
     right.style.display = this.page < paginator.pages ? 'flex': 'none';
 
     this.paginator.elements
-        .map((movie) => new MovieComponent(movie))
+        .map((movie) => new MovieComponent(movie, this.modalComponent))
         .forEach((movieComponent) => movies.appendChild(movieComponent.element));
   }
 

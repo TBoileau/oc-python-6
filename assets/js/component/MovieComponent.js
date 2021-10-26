@@ -5,9 +5,12 @@ export default class MovieComponent {
   /**
    * MovieComponent constructor
    * @param {Movie} movie
+   * @param {ModalComponent} modalComponent
    */
-  constructor(movie) {
+  constructor(movie, modalComponent) {
     this.movie = movie;
+    this.modalComponent = modalComponent;
+    this.createElement = this.createElement.bind(this);
     this.createElement();
   }
 
@@ -27,5 +30,10 @@ export default class MovieComponent {
     const caption = document.createElement('figcaption');
     caption.textContent = this.movie.title;
     figure.appendChild(caption);
+
+    this.element.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.modalComponent.open(this.movie);
+    });
   }
 }
