@@ -2,6 +2,7 @@
 
 install:
 	yarn install
+	cp .env .env.local
 
 eslint:
 	npx eslint assets/
