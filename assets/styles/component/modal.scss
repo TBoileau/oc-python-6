@@ -66,5 +66,13 @@ body.modal-open {
         }
       }
     }
+
+    @media (max-width: 540px) {
+      flex-direction: column;
+
+      > figure {
+        width: 100%;
+      }
+    }
   }
 }
