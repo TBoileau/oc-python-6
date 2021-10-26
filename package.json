@@ -15,6 +15,7 @@
     "@babel/preset-react": "^7.0.0",
     "@symfony/webpack-encore": "^1.0.0",
     "core-js": "^3.0.0",
+    "dotenv": "^10.0.0",
     "eslint": "^7.27.0",
     "eslint-config-google": "^0.14.0",
     "file-loader": "^6.2.0",
@@ -24,5 +25,8 @@
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
     "webpack-notifier": "^1.6.0"
+  },
+  "dependencies": {
+    "reset-css": "^5.0.1"
   }
 }
