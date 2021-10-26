@@ -6,10 +6,12 @@ export default class CoverComponent {
    * CoverComponent constructor
    * @param {Movie} movie
    * @param {ModalComponent} modalComponent
+   * @param {MovieRepository} movieRepository
    */
-  constructor(movie, modalComponent) {
+  constructor(movie, modalComponent, movieRepository) {
     this.movie = movie;
     this.modalComponent = modalComponent;
+    this.movieRepository = movieRepository;
     this.createElement();
   }
 
@@ -40,6 +42,13 @@ export default class CoverComponent {
     play.href = '#';
     play.textContent = 'Lecture';
     container.appendChild(play);
+
+    const description = document.createElement('p');
+    container.appendChild(description);
+
+    this.movieRepository.getFullDetailOfMovie(this.movie).then(() => {
+      description.textContent = this.movie.description;
+    });
 
     play.addEventListener('click', (e) => {
       e.preventDefault();

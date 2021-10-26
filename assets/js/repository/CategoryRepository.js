@@ -11,10 +11,10 @@ export default class CategoryRepository extends Repository {
    * @param {int} page
    * @return {Paginator}
    */
-  async getCategories(page) {
+  getCategories(page) {
     page = page || 1;
 
-    return await this.get(`/?page=${page}`)
+    return this.get(`/?page=${page}`)
         .then((response) => new Paginator(
             response.results.map((category) => new Category(category.id, category.name)),
             response.count,
