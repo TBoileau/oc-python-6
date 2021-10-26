@@ -15,9 +15,9 @@ export default class MovieRepository extends Repository {
   async getMoviesByCategory(page, category) {
     page = page || 1;
 
-    return new Paginator(
-        await this.get(`/?genre=${category.name}&page=${page}`)
-            .then((raw) => raw.results.map((movie) => new Movie(
+    return await await this.get(`/?genre=${category.name}&page=${page}`)
+        .then((response) => new Paginator(
+            response.results.map((movie) => new Movie(
                 movie.id,
                 movie.title,
                 movie.image_url,
@@ -27,11 +27,13 @@ export default class MovieRepository extends Repository {
                 movie.writers,
                 movie.actors,
                 movie.directors,
-            ))),
-        page,
-        this.getMoviesByCategory.bind(this),
-        [category],
-    );
+            )),
+            response.count,
+            page,
+            this.getMoviesByCategory.bind(this),
+            [category],
+        ),
+        );
   }
 }
 
