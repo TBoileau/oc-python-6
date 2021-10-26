@@ -12,6 +12,7 @@
     "build": "encore production --progress"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
     "@symfony/webpack-encore": "^1.0.0",
     "core-js": "^3.0.0",
     "eslint": "^7.27.0",
@@ -23,8 +24,5 @@
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
     "webpack-notifier": "^1.6.0"
-  },
-  "dependencies": {
-    "reset-css": "^5.0.1"
   }
 }
