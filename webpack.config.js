@@ -5,27 +5,27 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-  .setOutputPath('public/build/')
-  .setPublicPath('/build')
-  .addEntry('app', './assets/js/app.js')
-  .splitEntryChunks()
-  .enableSingleRuntimeChunk()
-  .cleanupOutputBeforeBuild()
-  .enableBuildNotifications()
-  .enableSourceMaps(!Encore.isProduction())
-  .enableVersioning(Encore.isProduction())
-  .configureBabel((config) => {
-    config.plugins.push('@babel/plugin-proposal-class-properties');
-  })
-  .configureBabelPresetEnv((config) => {
-    config.useBuiltIns = 'usage';
-    config.corejs = 3;
-  })
-  .enableSassLoader()
-  .copyFiles({
-    from: './assets/images',
-    to: 'images/[path][name].[ext]'
-  })
+    .setOutputPath('public/build/')
+    .setPublicPath('/build')
+    .addEntry('app', './assets/js/app.js')
+    .enableSingleRuntimeChunk()
+    .cleanupOutputBeforeBuild()
+    .enableBuildNotifications()
+    .enableSourceMaps(!Encore.isProduction())
+    .enableVersioning(Encore.isProduction())
+    .configureBabel((config) => {
+      config.plugins.push('@babel/plugin-proposal-class-properties');
+    })
+    .configureBabelPresetEnv((config) => {
+      config.useBuiltIns = 'usage';
+      config.corejs = 3;
+    })
+    .enableReactPreset()
+    .enableSassLoader()
+    .copyFiles({
+      from: './assets/images',
+      to: 'images/[path][name].[ext]',
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();
