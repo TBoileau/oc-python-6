@@ -5,6 +5,7 @@ import MovieRepository from './repository/MovieRepository';
 import EventDispatcher from './event_dispatcher/EventDispatcher';
 import CoverComponent from './component/CoverComponent';
 import Category from './entity/Category';
+import ModalComponent from './component/ModalComponent';
 
 const eventDispatcher = new EventDispatcher();
 eventDispatcher.register('categoryComponentDidMount');
@@ -14,14 +15,17 @@ const movieRepository = new MovieRepository('http://127.0.0.1:8000/api/v1/titles
 
 let lock = false;
 
+const modalComponent = new ModalComponent(movieRepository);
+document.querySelector('main').appendChild(modalComponent.element);
+
 movieRepository.getMostRatedMovie().then((movie) => {
-  document.querySelector('main').appendChild(new CoverComponent(movie).element);
+  document.querySelector('main').appendChild(new CoverComponent(movie, modalComponent).element);
 });
 
 eventDispatcher.addEventListener('categoryComponentDidMount', (categoryComponent) => {
   document.querySelector('main').appendChild(categoryComponent.element);
   lock = false;
-  if ([...document.querySelector('main').children].indexOf(categoryComponent.element) === 2) {
+  if ([...document.querySelector('main').children].indexOf(categoryComponent.element) === 3) {
     categoryComponent.element.id = 'categories';
   }
 });
@@ -32,7 +36,7 @@ categoryRepository.getCategories().then((paginator) => {
   paginator.elements.unshift(new Category(null, 'Films les mieux notés'));
 
   paginator.elements.forEach((category, index) => {
-    new CategoryComponent(category, movieRepository, eventDispatcher);
+    new CategoryComponent(category, movieRepository, eventDispatcher, modalComponent);
   });
 
   window.addEventListener('scroll', () => {
@@ -44,7 +48,7 @@ categoryRepository.getCategories().then((paginator) => {
 
       next.then((paginator) => {
         paginator.elements.forEach((category) => {
-          new CategoryComponent(category, movieRepository, eventDispatcher);
+          new CategoryComponent(category, movieRepository, eventDispatcher, modalComponent);
         });
       });
     }

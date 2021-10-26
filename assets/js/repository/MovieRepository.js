@@ -33,12 +33,6 @@ export default class MovieRepository extends Repository {
                 movie.id,
                 movie.title,
                 movie.image_url,
-                parseFloat(movie.imdb_score),
-                movie.votes,
-                movie.year,
-                movie.writers,
-                movie.actors,
-                movie.directors,
             )),
             response.count,
             page,
@@ -46,6 +40,28 @@ export default class MovieRepository extends Repository {
             [category],
         ),
         );
+  }
+
+  /**
+   * Get full detail of a movie
+   * @param {Movie} movie
+   * @return {Promise<Movie>}
+   */
+  async getFullDetailOfMovie(movie) {
+    return await await this.get(`/${movie.id}`)
+        .then((response) => {
+          movie.categories = response.genres;
+          movie.publishedAt = new Date(response.date_published);
+          movie.rated = response.rated;
+          movie.score = parseFloat(response.imdb_score);
+          movie.directors = response.directors;
+          movie.actors = response.actors;
+          movie.duration = response.duration;
+          movie.countries = response.countries;
+          movie.income = response.worldwide_gross_income;
+          movie.description = response.description;
+          return movie;
+        });
   }
 
   /**
@@ -58,12 +74,6 @@ export default class MovieRepository extends Repository {
             response.results[0].id,
             response.results[0].title,
             response.results[0].image_url,
-            parseFloat(response.results[0].imdb_score),
-            response.results[0].votes,
-            response.results[0].year,
-            response.results[0].writers,
-            response.results[0].actors,
-            response.results[0].directors,
         ));
   }
 }

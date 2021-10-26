@@ -5,9 +5,11 @@ export default class CoverComponent {
   /**
    * CoverComponent constructor
    * @param {Movie} movie
+   * @param {ModalComponent} modalComponent
    */
-  constructor(movie) {
+  constructor(movie, modalComponent) {
     this.movie = movie;
+    this.modalComponent = modalComponent;
     this.createElement();
   }
 
@@ -38,5 +40,10 @@ export default class CoverComponent {
     play.href = '#';
     play.textContent = 'Lecture';
     container.appendChild(play);
+
+    play.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.modalComponent.open(this.movie);
+    });
   }
 }
