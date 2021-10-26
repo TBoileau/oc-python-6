@@ -58,12 +58,12 @@
       flex-wrap: nowrap;
       overflow-x: hidden;
       position: relative;
+      gap: 1rem;
 
       > article {
         flex-shrink: 0;
-        aspect-ratio: 16/9;
-        width: 400px;
-        max-width: 100%;
+        width: calc(20% - 0.8rem);
+        aspect-ratio: 91/134;
 
         > figure {
           position: relative;
