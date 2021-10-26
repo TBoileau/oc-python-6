@@ -19,8 +19,7 @@ const modalComponent = new ModalComponent(movieRepository);
 document.querySelector('main').appendChild(modalComponent.element);
 
 movieRepository.getMostRatedMovie().then((movie) => {
-  document.querySelector('main').appendChild(new CoverComponent(movie, modalComponent).element);
-
+  document.querySelector('main').appendChild(new CoverComponent(movie, modalComponent, movieRepository).element);
 
   categoryRepository.getCategories().then((paginator) => {
     paginator.elements = paginator.elements.sort((a, b) => a.name < b.name ? -1 : 1);
