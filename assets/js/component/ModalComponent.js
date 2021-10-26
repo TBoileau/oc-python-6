@@ -103,7 +103,7 @@ export default class ModalComponent {
       this.actors.textContent = `Acteurs : ${movie.actors.join(', ')}`;
       this.duration.textContent = `Durée : ${duration}`;
       this.countries.textContent = `Pays d'origin : ${movie.countries.join(', ')}`;
-      this.income.textContent = `Box office : ${movie.income}$`;
+      this.income.textContent = `Box office : ${movie.income !== null ? `${movie.income}$` : 'N/C'}`;
       this.description.textContent = `Synopsis : ${movie.description}`;
     });
   }
