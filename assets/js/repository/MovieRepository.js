@@ -35,6 +35,25 @@ export default class MovieRepository extends Repository {
         ),
         );
   }
+
+  /**
+   * Get most rated movie
+   * @return {Promise<Movie>}
+   */
+  async getMostRatedMovie() {
+    return await await this.get(`/?sort_by=-imdb_score`)
+        .then((response) => new Movie(
+            response.results[0].id,
+            response.results[0].title,
+            response.results[0].image_url,
+            parseFloat(response.results[0].imdb_score),
+            response.results[0].votes,
+            response.results[0].year,
+            response.results[0].writers,
+            response.results[0].actors,
+            response.results[0].directors,
+        ));
+  }
 }
 
 /**

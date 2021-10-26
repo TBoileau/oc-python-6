@@ -3,6 +3,7 @@ import CategoryRepository from './repository/CategoryRepository';
 import CategoryComponent from './component/CategoryComponent';
 import MovieRepository from './repository/MovieRepository';
 import EventDispatcher from './event_dispatcher/EventDispatcher';
+import CoverComponent from './component/CoverComponent';
 
 const eventDispatcher = new EventDispatcher();
 eventDispatcher.register('categoryComponentDidMount');
@@ -11,6 +12,11 @@ const categoryRepository = new CategoryRepository('http://127.0.0.1:8000/api/v1/
 const movieRepository = new MovieRepository('http://127.0.0.1:8000/api/v1/titles');
 
 let lock = false;
+
+
+movieRepository.getMostRatedMovie().then((movie) => {
+  document.querySelector('main').appendChild(new CoverComponent(movie).element);
+});
 
 eventDispatcher.addEventListener('categoryComponentDidMount', (categoryComponent) => {
   document.querySelector('main').appendChild(categoryComponent.element);
