@@ -1,13 +1,22 @@
 import '../styles/app.scss';
 import CategoryRepository from './repository/CategoryRepository';
 import CategoryComponent from './component/CategoryComponent';
+import MovieRepository from './repository/MovieRepository';
+import EventDispatcher from './event_dispatcher/EventDispatcher';
+
+const eventDispatcher = new EventDispatcher();
+
 
 const categoryRepository = new CategoryRepository('http://127.0.0.1:8000/api/v1/genres');
+const movieRepository = new MovieRepository('http://127.0.0.1:8000/api/v1/titles');
 
 categoryRepository.getCategories().then((categories) => {
   categories.forEach((category) => {
-    const categoryComponent = new CategoryComponent(category);
-    document.querySelector('main').appendChild(categoryComponent.element);
+    new CategoryComponent(category, movieRepository, eventDispatcher);
+
+    eventDispatcher.addEventListener('categoryComponentDidMount', (categoryComponent) => {
+      document.querySelector('main').appendChild(categoryComponent.element);
+    });
   });
 });
 

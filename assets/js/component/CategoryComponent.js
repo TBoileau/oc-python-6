@@ -1,3 +1,5 @@
+import MovieComponent from './MovieComponent';
+
 /**
  * Class CategoryComponent
  */
@@ -5,16 +7,24 @@ export default class CategoryComponent {
   /**
    * CategoryComponent constructor
    * @param {Category} category
+   * @param {MovieRepository} movieRepository
+   * @param {EventDispatcher} eventDispatcher
    */
-  constructor(category) {
+  constructor(category, movieRepository, eventDispatcher) {
+    eventDispatcher.register('categoryComponentDidMount');
     this.category = category;
-    this.createElement();
+    this.movieRepository = movieRepository;
+    this.movieRepository.getMoviesByCategory(this.category)
+        .then((movies) => movies.map((movie) => new MovieComponent(movie)))
+        .then(this.createElement.bind(this))
+        .then(() => eventDispatcher.dispatch('categoryComponentDidMount', this));
   }
 
   /**
    * Create DOM element
+   * @param {Array<MovieComponent>} movieComponents
    */
-  createElement() {
+  createElement(movieComponents) {
     this.element = document.createElement('section');
     this.element.classList.add('category');
 
@@ -37,5 +47,9 @@ export default class CategoryComponent {
     const movies = document.createElement('div');
     movies.classList.add('movies');
     content.appendChild(movies);
+
+    movieComponents.forEach((movieComponent) => {
+      movies.appendChild(movieComponent.element);
+    });
   }
 }
