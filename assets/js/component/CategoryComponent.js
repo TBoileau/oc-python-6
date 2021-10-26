@@ -18,17 +18,16 @@ export default class CategoryComponent {
     this.render = this.render.bind(this);
     this.createElement = this.createElement.bind(this);
     this.category = category;
+    this.eventDispatcher = eventDispatcher;
     this.movieRepository = movieRepository;
-    this.movieRepository.getMoviesByCategory(this.page, this.category)
-        .then(this.createElement)
-        .then(() => eventDispatcher.dispatch('categoryComponentDidMount', this));
+    this.createElement();
+    this.movieRepository.getMoviesByCategory(this.page, this.category).then(this.render);
   }
 
   /**
    * Create DOM element
-   * @param {Paginator} paginator
    */
-  createElement(paginator) {
+  createElement() {
     this.element = document.createElement('section');
     this.element.classList.add('category');
 
@@ -55,10 +54,7 @@ export default class CategoryComponent {
     movies.classList.add('movies');
     content.appendChild(movies);
 
-    left.style.display = this.page > 1 ? 'flex': 'none';
-    right.style.display = this.page < paginator.pages ? 'flex': 'none';
-
-    this.render(paginator);
+    this.eventDispatcher.dispatch('categoryComponentDidMount', this);
   }
 
   /**
@@ -69,6 +65,11 @@ export default class CategoryComponent {
     this.paginator = paginator;
     const content = this.element.querySelector('.category-content');
     const movies = content.querySelector('.movies');
+    const left = content.querySelector('.control-left');
+    const right = content.querySelector('.control-right');
+
+    left.style.display = this.page > 1 ? 'flex': 'none';
+    right.style.display = this.page < paginator.pages ? 'flex': 'none';
 
     this.paginator.elements
         .map((movie) => new MovieComponent(movie))
