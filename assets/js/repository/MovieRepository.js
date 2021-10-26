@@ -1,5 +1,6 @@
 import Repository from './Repository';
 import Movie from '../entity/Movie';
+import Paginator from '../helper/Paginator';
 
 /**
  * Class MovieRepository
@@ -7,24 +8,30 @@ import Movie from '../entity/Movie';
 export default class MovieRepository extends Repository {
   /**
    * Get movies by category
-   * @param {Category} category
    * @param {int} page
-   * @return {Promise<Array<Movie>>}
+   * @param {Category} category
+   * @return {Paginator}
    */
-  getMoviesByCategory(category, page) {
+  async getMoviesByCategory(page, category) {
     page = page || 1;
-    return this.get(`/?genre=${category.name}&page=${page}`)
-        .then((raw) => raw.results.map((movie) => new Movie(
-            movie.id,
-            movie.title,
-            movie.image_url,
-            parseFloat(movie.imdb_score),
-            movie.votes,
-            movie.year,
-            movie.writers,
-            movie.actors,
-            movie.directors,
-        )));
+
+    return new Paginator(
+        await this.get(`/?genre=${category.name}&page=${page}`)
+            .then((raw) => raw.results.map((movie) => new Movie(
+                movie.id,
+                movie.title,
+                movie.image_url,
+                parseFloat(movie.imdb_score),
+                movie.votes,
+                movie.year,
+                movie.writers,
+                movie.actors,
+                movie.directors,
+            ))),
+        page,
+        this.getMoviesByCategory.bind(this),
+        [category],
+    );
   }
 }
 

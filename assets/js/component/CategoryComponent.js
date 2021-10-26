@@ -14,8 +14,8 @@ export default class CategoryComponent {
     eventDispatcher.register('categoryComponentDidMount');
     this.category = category;
     this.movieRepository = movieRepository;
-    this.movieRepository.getMoviesByCategory(this.category)
-        .then((movies) => movies.map((movie) => new MovieComponent(movie)))
+    this.movieRepository.getMoviesByCategory(1, this.category)
+        .then((paginator) => paginator.elements.map((movie) => new MovieComponent(movie)))
         .then(this.createElement.bind(this))
         .then(() => eventDispatcher.dispatch('categoryComponentDidMount', this));
   }

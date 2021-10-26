@@ -10,15 +10,35 @@ const eventDispatcher = new EventDispatcher();
 const categoryRepository = new CategoryRepository('http://127.0.0.1:8000/api/v1/genres');
 const movieRepository = new MovieRepository('http://127.0.0.1:8000/api/v1/titles');
 
-categoryRepository.getCategories().then((categories) => {
-  categories.forEach((category) => {
+categoryRepository.getCategories().then((paginator) => {
+  paginator.elements.forEach((category) => {
     new CategoryComponent(category, movieRepository, eventDispatcher);
 
     eventDispatcher.addEventListener('categoryComponentDidMount', (categoryComponent) => {
       document.querySelector('main').appendChild(categoryComponent.element);
     });
   });
+
+  let lock = false;
+
+  window.addEventListener('scroll', () => {
+    if (window.innerHeight - 400 < window.scrollY && !lock) {
+      lock = true;
+      paginator.next().then((paginator) => {
+        paginator.elements.forEach((category) => {
+          new CategoryComponent(category, movieRepository, eventDispatcher);
+
+
+          eventDispatcher.addEventListener('categoryComponentDidMount', (categoryComponent) => {
+            document.querySelector('main').appendChild(categoryComponent.element);
+            lock = false;
+          });
+        });
+      });
+    }
+  });
 });
+
 
 document.querySelectorAll('section.category').forEach((category) => {
   const movies = [...category.querySelectorAll('article')];
