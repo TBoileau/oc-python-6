@@ -10,8 +10,8 @@ import ModalComponent from './component/ModalComponent';
 const eventDispatcher = new EventDispatcher();
 eventDispatcher.register('categoryComponentDidMount');
 
-const categoryRepository = new CategoryRepository('http://127.0.0.1:8000/api/v1/genres');
-const movieRepository = new MovieRepository('http://127.0.0.1:8000/api/v1/titles');
+const categoryRepository = new CategoryRepository(`${process.env.API_URL}/genres`);
+const movieRepository = new MovieRepository(`${process.env.API_URL}/titles`);
 
 let lock = false;
 
