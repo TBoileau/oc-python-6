@@ -20,6 +20,32 @@ document.querySelector('main').appendChild(modalComponent.element);
 
 movieRepository.getMostRatedMovie().then((movie) => {
   document.querySelector('main').appendChild(new CoverComponent(movie, modalComponent).element);
+
+
+  categoryRepository.getCategories().then((paginator) => {
+    paginator.elements = paginator.elements.sort((a, b) => a.name < b.name ? -1 : 1);
+
+    paginator.elements.unshift(new Category(null, 'Films les mieux notés'));
+
+    paginator.elements.forEach((category, index) => {
+      new CategoryComponent(category, movieRepository, eventDispatcher, modalComponent);
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.innerHeight - 400 < window.scrollY && !lock) {
+        const next = paginator.next();
+        if (next === null) {
+          return null;
+        }
+
+        next.then((paginator) => {
+          paginator.elements.forEach((category) => {
+            new CategoryComponent(category, movieRepository, eventDispatcher, modalComponent);
+          });
+        });
+      }
+    });
+  });
 });
 
 eventDispatcher.addEventListener('categoryComponentDidMount', (categoryComponent) => {
@@ -28,29 +54,4 @@ eventDispatcher.addEventListener('categoryComponentDidMount', (categoryComponent
   if ([...document.querySelector('main').children].indexOf(categoryComponent.element) === 3) {
     categoryComponent.element.id = 'categories';
   }
-});
-
-categoryRepository.getCategories().then((paginator) => {
-  paginator.elements = paginator.elements.sort((a, b) => a.name < b.name ? -1 : 1);
-
-  paginator.elements.unshift(new Category(null, 'Films les mieux notés'));
-
-  paginator.elements.forEach((category, index) => {
-    new CategoryComponent(category, movieRepository, eventDispatcher, modalComponent);
-  });
-
-  window.addEventListener('scroll', () => {
-    if (window.innerHeight - 400 < window.scrollY && !lock) {
-      const next = paginator.next();
-      if (next === null) {
-        return null;
-      }
-
-      next.then((paginator) => {
-        paginator.elements.forEach((category) => {
-          new CategoryComponent(category, movieRepository, eventDispatcher, modalComponent);
-        });
-      });
-    }
-  });
 });

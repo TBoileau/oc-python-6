@@ -12,7 +12,7 @@ export default class MovieRepository extends Repository {
    * @param {Category} category
    * @return {Paginator}
    */
-  async getMoviesByCategory(page, category) {
+  getMoviesByCategory(page, category) {
     page = page || 1;
     category = category || null;
 
@@ -27,7 +27,7 @@ export default class MovieRepository extends Repository {
 
     const searchParams = new URLSearchParams(queryParams);
 
-    return await await this.get(`/?${searchParams.toString()}`)
+    return this.get(`/?${searchParams.toString()}`)
         .then((response) => new Paginator(
             response.results.map((movie) => new Movie(
                 movie.id,
@@ -47,8 +47,8 @@ export default class MovieRepository extends Repository {
    * @param {Movie} movie
    * @return {Promise<Movie>}
    */
-  async getFullDetailOfMovie(movie) {
-    return await await this.get(`/${movie.id}`)
+  getFullDetailOfMovie(movie) {
+    return this.get(`/${movie.id}`)
         .then((response) => {
           movie.categories = response.genres;
           movie.publishedAt = new Date(response.date_published);
@@ -68,8 +68,8 @@ export default class MovieRepository extends Repository {
    * Get most rated movie
    * @return {Promise<Movie>}
    */
-  async getMostRatedMovie() {
-    return await await this.get(`/?sort_by=-imdb_score`)
+  getMostRatedMovie() {
+    return this.get(`/?sort_by=-imdb_score`)
         .then((response) => new Movie(
             response.results[0].id,
             response.results[0].title,
