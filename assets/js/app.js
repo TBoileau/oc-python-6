@@ -1,4 +1,15 @@
 import '../styles/app.scss';
+import CategoryRepository from './repository/CategoryRepository';
+import CategoryComponent from './component/CategoryComponent';
+
+const categoryRepository = new CategoryRepository('http://127.0.0.1:8000/api/v1/genres');
+
+categoryRepository.getCategories().then((categories) => {
+  categories.forEach((category) => {
+    const categoryComponent = new CategoryComponent(category);
+    document.querySelector('main').appendChild(categoryComponent.element);
+  });
+});
 
 document.querySelectorAll('section.category').forEach((category) => {
   const movies = [...category.querySelectorAll('article')];
