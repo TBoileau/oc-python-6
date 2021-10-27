@@ -20,16 +20,13 @@ export default class MovieComponent {
   createElement() {
     this.element = document.createElement('article');
 
-    const figure = document.createElement('figure');
+    const figure = document.createElement('picture');
     this.element.appendChild(figure);
 
     const image = document.createElement('img');
     image.src = this.movie.imageUrl;
+    image.alt = this.movie.title;
     figure.appendChild(image);
-
-    const caption = document.createElement('figcaption');
-    caption.textContent = this.movie.title;
-    figure.appendChild(caption);
 
     this.element.addEventListener('click', (e) => {
       e.preventDefault();
