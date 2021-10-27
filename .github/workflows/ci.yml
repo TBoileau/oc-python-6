@@ -10,3 +10,5 @@ jobs:
           make install
       - name: Analyse
         run: make analyse
+      - name: Tests
+        run: make tests

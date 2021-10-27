@@ -1,4 +1,4 @@
-.PHONY: install, analyse, fix
+.PHONY: install, analyse, fix, tests
 
 install:
 	yarn install
@@ -18,3 +18,5 @@ fix:
 	npx eslint assets/ --fix
 	npx stylelint "assets/styles/**/*.scss" --fix
 
+tests:
+	yarn run jest
