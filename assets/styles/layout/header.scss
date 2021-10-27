@@ -1,0 +1,46 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  padding: 1rem 0;
+  color: $light;
+  background: rgba(0, 0, 0, 0.3);
+
+  > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > h1 {
+      font-size: 1.5rem;
+      color: $red;
+    }
+
+    > nav {
+      flex-grow: 1;
+
+      > ul {
+        display: flex;
+        justify-content: flex-end;
+
+        > li {
+          margin: 0 2rem;
+
+          @include respond-to(sm) {
+            margin: 0 1rem;
+          }
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
