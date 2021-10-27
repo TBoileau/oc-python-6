@@ -36,7 +36,6 @@ export default class Paginator {
     }
 
     this.currentPage++;
-
     return this['callback'](this.currentPage, ...this.extra);
   }
 }

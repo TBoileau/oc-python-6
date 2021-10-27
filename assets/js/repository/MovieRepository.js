@@ -21,7 +21,7 @@ export default class MovieRepository extends Repository {
       sort_by: '-imdb_score',
     };
 
-    if (category.id !== null) {
+    if (category !== null && category.id !== null) {
       queryParams.genre = category.name;
     }
 
@@ -77,7 +77,3 @@ export default class MovieRepository extends Repository {
         ));
   }
 }
-
-/**
- * ;
- */

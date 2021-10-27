@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /**
  * Abstract class Repository
  */
@@ -16,6 +18,6 @@ export default class Repository {
    * @return {Promise<Array<object>>}
    */
   get(uri) {
-    return fetch(`${this.url}${uri}`).then((response) => response.json());
+    return axios.get(`${this.url}${uri}`).then((response) => response.data);
   }
 }

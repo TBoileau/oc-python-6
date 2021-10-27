@@ -23,6 +23,7 @@ export default class CoverComponent {
     this.element.classList.add('cover');
 
     const img = document.createElement('img');
+    img.alt = this.movie.title;
     img.src = this.movie.imageUrl;
     this.element.appendChild(img);
 

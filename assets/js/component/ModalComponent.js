@@ -30,14 +30,11 @@ export default class ModalComponent {
     close.addEventListener('click', this.close);
     content.appendChild(close);
 
-    const figure = document.createElement('figure');
+    const figure = document.createElement('picture');
     content.appendChild(figure);
 
     this.image = document.createElement('img');
     figure.appendChild(this.image);
-
-    const caption = document.createElement('figcaption');
-    figure.appendChild(caption);
 
     const movie = document.createElement('div');
     content.appendChild(movie);
